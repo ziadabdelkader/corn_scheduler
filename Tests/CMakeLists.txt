@@ -6,6 +6,7 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(googletest)
+include_directories("../plog-master/include")
 
 # Now simply link against gtest or gtest_main as needed. Eg
 add_executable(Tests thread_safe_heap_test.cpp
