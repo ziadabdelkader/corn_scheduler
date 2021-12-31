@@ -2,10 +2,10 @@
 
 void Thread_pool::worker_thread() {
     while (true) {
-        Event event;
-        if (event_queue.try_pop_and_push(event)) {
+        Job job;
+        if (event_queue.try_pop_and_push(job)) {
             std::cout << "running task\n";
-            event.job.execute();
+            job.execute();
             std::cout << "task done\n";
         } else {
             std::this_thread::yield();
@@ -29,8 +29,5 @@ Thread_pool::Thread_pool() :
 
 void Thread_pool::submit(Job job) {
     std::cout << "submitting event\n";
-    event_queue.push(Event{
-            std::chrono::system_clock::now(),
-            std::move(job)
-    });
+    event_queue.push(std::move(job));
 }

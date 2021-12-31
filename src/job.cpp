@@ -13,6 +13,6 @@ void Job::execute() {
     }
     auto end = std::chrono::system_clock::now();
     PLOGI << "Job " << id << " ends."
-          << " Actual execution time = " << duration_cast<std::chrono::milliseconds>(end - start).count()
+          << " Actual execution time = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
           << " milliseconds." << " Expected execution time = " << expected_interval.count() << " milliseconds.";
 }

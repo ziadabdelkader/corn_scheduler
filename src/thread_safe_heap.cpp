@@ -1,13 +1,13 @@
 #include <iostream>
 #include "thread_safe_heap.h"
 
-void Thread_safe_heap::push(Event new_event) {
+void Thread_safe_heap::push(Job new_job) {
     std::lock_guard<std::mutex> lk(mut);
     std::cout << "pushing to the queue" << std::endl;
-    event_queue.push(std::move(new_event));
+    event_queue.push(Event{std::chrono::system_clock::now() ,std::move(new_job)});
 }
 
-bool Thread_safe_heap::try_pop_and_push(Event &event) {
+bool Thread_safe_heap::try_pop_and_push(Job &job) {
     std::lock_guard<std::mutex> lk(mut);
 
     //check if it's time to perform next task
@@ -16,13 +16,13 @@ bool Thread_safe_heap::try_pop_and_push(Event &event) {
 
     std::cout << "removing from the queue" << std::endl;
     //remove the task from the queue
-    event = event_queue.top();
+    Event event = event_queue.top();
+    job = event.job;
     event_queue.pop();
 
     //add the task back to the queue with the next scheduled time
-    Event new_event = event;
-    new_event.time += new_event.job.frequency;
-    event_queue.push(std::move(new_event));
+    event.time += event.job.frequency;
+    event_queue.push(std::move(event));
 
     return true;
 }

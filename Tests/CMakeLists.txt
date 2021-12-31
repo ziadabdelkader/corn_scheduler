@@ -8,5 +8,6 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 # Now simply link against gtest or gtest_main as needed. Eg
-add_executable(Tests test_sample.cpp)
+add_executable(Tests thread_safe_heap_test.cpp
+        ../src/job.h ../src/job.cpp ../src/thread_safe_heap.cpp ../src/thread_safe_heap.h)
 target_link_libraries(Tests gtest_main)

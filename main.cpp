@@ -30,6 +30,5 @@ int main() {
     for(const auto& job: jobs){
         scheduler.submit(job);
     }
-
     return 0;
 }

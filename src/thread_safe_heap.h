@@ -21,9 +21,9 @@ private:
 public:
     Thread_safe_heap() = default;
 
-    void push(Event new_event);
+    void push(Job new_job);
 
-    bool try_pop_and_push(Event &event);
+    bool try_pop_and_push(Job &job);
 
     bool empty() const;
 };
