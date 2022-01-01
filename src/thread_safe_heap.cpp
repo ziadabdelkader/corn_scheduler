@@ -1,9 +1,7 @@
-#include <iostream>
 #include "thread_safe_heap.h"
 
 void Thread_safe_heap::push(Job new_job) {
     std::lock_guard<std::mutex> lk(mut);
-    std::cout << "pushing to the queue" << std::endl;
     event_queue.push(Event{std::chrono::system_clock::now() ,std::move(new_job)});
 }
 
@@ -14,7 +12,6 @@ bool Thread_safe_heap::try_pop_and_push(Job &job) {
     if (event_queue.empty() || event_queue.top().time > std::chrono::system_clock::now())
         return false;
 
-    std::cout << "removing from the queue" << std::endl;
     //remove the task from the queue
     Event event = event_queue.top();
     job = event.job;

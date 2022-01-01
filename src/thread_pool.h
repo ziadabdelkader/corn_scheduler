@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <thread>
-#include <iostream>
 #include <atomic>
 #include "thread_safe_heap.h"
 #include "join_threads.h"
@@ -20,7 +19,7 @@ private:
     std::atomic_bool done;
     Thread_safe_heap event_queue;
     std::vector<std::thread> threads;
-    Join_threads joiner;
+    Join_threads joiner; //join threads on destructor
 
     void worker_thread();
 
