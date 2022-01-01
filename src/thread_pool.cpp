@@ -1,7 +1,7 @@
 #include "thread_pool.h"
 
 void Thread_pool::worker_thread() {
-    while (true) {
+    while (!done) {
         Job job;
         if (event_queue.try_pop_and_push(job)) {
             std::cout << "running task\n";
@@ -14,7 +14,7 @@ void Thread_pool::worker_thread() {
 }
 
 Thread_pool::Thread_pool() :
-        joiner(threads) {
+        done(false), joiner(threads) {
     unsigned const thread_count = std::thread::hardware_concurrency();
     std::cout << thread_count << std::endl;
     try {
@@ -23,6 +23,7 @@ Thread_pool::Thread_pool() :
         }
     }
     catch (...) {
+        done=true;
         throw;
     }
 }
@@ -30,4 +31,8 @@ Thread_pool::Thread_pool() :
 void Thread_pool::submit(Job job) {
     std::cout << "submitting event\n";
     event_queue.push(std::move(job));
+}
+
+Thread_pool::~Thread_pool() {
+    done = true;
 }

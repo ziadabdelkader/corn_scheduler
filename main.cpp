@@ -30,5 +30,11 @@ int main() {
     for(const auto& job: jobs){
         scheduler.submit(job);
     }
+
+    std::cout << "type \"exit\" to end." << std::endl;
+    std::string str;
+    while (str != "exit"){
+        std::cin >> str;
+    }
     return 0;
 }

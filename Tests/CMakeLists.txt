@@ -9,6 +9,19 @@ FetchContent_MakeAvailable(googletest)
 include_directories("../plog-master/include")
 
 # Now simply link against gtest or gtest_main as needed. Eg
-add_executable(Tests thread_safe_heap_test.cpp
-        ../src/job.h ../src/job.cpp ../src/thread_safe_heap.cpp ../src/thread_safe_heap.h)
-target_link_libraries(Tests gtest_main)
+add_executable(Tests
+        thread_safe_heap_test.cpp
+        scheduler_test.cpp
+        ../src/job.h
+        ../src/job.cpp
+        ../src/thread_safe_heap.cpp
+        ../src/thread_safe_heap.h
+        ../tasks.h
+        ../tasks.cpp
+        ../src/thread_pool.cpp
+        ../src/thread_pool.h
+        ../src/join_threads.h
+        ../src/join_threads.cpp
+        )
+
+target_link_libraries(Tests gtest_main gmock)

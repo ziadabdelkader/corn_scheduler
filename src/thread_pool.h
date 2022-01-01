@@ -4,6 +4,7 @@
 #include <vector>
 #include <thread>
 #include <iostream>
+#include <atomic>
 #include "thread_safe_heap.h"
 #include "join_threads.h"
 
@@ -13,7 +14,10 @@ public:
 
     void submit(Job job);
 
+    ~Thread_pool();
+
 private:
+    std::atomic_bool done;
     Thread_safe_heap event_queue;
     std::vector<std::thread> threads;
     Join_threads joiner;
