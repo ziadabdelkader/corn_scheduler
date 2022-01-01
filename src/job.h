@@ -16,10 +16,10 @@ public:
 
     Job() = default;
 
-    template<typename Rep, typename Period>
+    template<typename Rep1, typename Period1, typename Rep2, typename Period2>
     Job(int32_t id,
-        std::chrono::duration<Rep, Period> frequency,
-        std::chrono::duration<Rep, Period> expected_interval,
+        std::chrono::duration<Rep1, Period1> frequency,
+        std::chrono::duration<Rep2, Period2> expected_interval,
         Task fun): id(id),
                    frequency(frequency),
                    expected_interval(expected_interval),
